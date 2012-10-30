@@ -1,0 +1,4 @@
+== BatonTouchMe On Rails
+
+This is BatonTouchMe Server Application using Ruby on Rails.
+My name is Jaewoo.
