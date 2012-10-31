@@ -1,6 +1,10 @@
 class MainController < ApplicationController
 	skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
 
+	def home
+		
+	end
+
 	# error 처리 해주어야함
   def check_mobile_login
     #root_path/check_mobile_login?token=FB_MOBILE_TOKEN
@@ -12,11 +16,12 @@ class MainController < ApplicationController
 
     #find_by_uid
     logged = find_or_register_user_uid(user, token)
+    # logged = User.find_by_uid(user['id'])
 
     #respond authentication_token
     respond_to do |format|
       format.html {redirect_to root_path}
-      format.json {render json: logged.authentication_token}
+      format.json {render status: 200, json:{session:{error:"Success", auth_token: logged.authentication_token}}}
     end
   end
 

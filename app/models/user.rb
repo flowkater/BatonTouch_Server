@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :name, :oauth_token
 
   # facebook Koala API 선언
   def facebook

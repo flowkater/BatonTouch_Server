@@ -1,12 +1,15 @@
 Batontouchme::Application.routes.draw do
+
+  match "/home", to: "main#home"
+  root to: "main#home"
   
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}, 
               controllers: { omniauth_callbacks: "omniauth_callbacks", sessions:"sessions"}
   match "/check_mobile_login", to: 'main#check_mobile_login' # check_mobile_login(Facebook)
 
-  devise_scope :user do
-    resources :sessions, only: [:create, :destroy] # Session 생성
-  end
+  # devise_scope :user do
+  #   resources :sessions, only: [:create, :destroy] # Session 생성
+  # end
 
 
   # The priority is based upon order of creation:
