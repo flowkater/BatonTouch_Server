@@ -1,5 +1,7 @@
 Batontouchme::Application.routes.draw do
 
+  resources :tasks
+
   match "/home", to: "main#home"
   root to: "main#home"
   

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table(:users) do |t|
@@ -11,6 +12,11 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :oauth_token
       t.datetime :oauth_expires_at
+
+      ## User Infonmation
+      t.string :company # 소속, 학교, 직장 등등
+      t.string :phone # 인증 전화번호
+      t.text :introduce  # 자기 소개
 
       ## Recoverable
       t.string   :reset_password_token

@@ -1,0 +1,33 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @task.name
+p
+  strong Description:
+  = @task.description
+p
+  strong Fromloc:
+  = @task.fromloc
+p
+  strong Toloc:
+  = @task.toloc
+p
+  strong Spendtime:
+  = @task.spendtime
+p
+  strong Calldate:
+  = @task.calldate
+p
+  strong Enddate:
+  = @task.enddate
+p
+  strong Giftcon:
+  = @task.giftcon
+p
+  strong Price:
+  = @task.price
+
+= link_to 'Edit', edit_task_path(@task)
+'|
+= link_to 'Back', tasks_path

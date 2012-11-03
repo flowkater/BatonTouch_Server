@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -5,11 +6,29 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :token_authenticatable
 
-  # token 유저 생성시 생성
+  # token 유저 생성시 생성, 기본 cookie 생성
   before_save :ensure_authentication_token
+  after_create :cookiecreate
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :name, :oauth_token
+
+  # Task 관계
+  has_many :tasks
+
+  # TradeStats (Client 거래 상태)
+  has_many :tradestats
+
+  # Cash polymorphic
+  has_many :cashes, as: :cookiable
+
+  # Picture polymorphic
+  has_many :pictures, as: :imageable
+
+  # User's cookie
+  def cookie
+    cashes.first.cookie
+  end
 
   # facebook Koala API 선언
   def facebook
@@ -63,5 +82,11 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end
+
+  protected
+
+  def cookiecreate
+    self.cashes.create!
   end
 end

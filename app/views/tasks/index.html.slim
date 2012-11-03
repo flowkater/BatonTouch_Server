@@ -1,0 +1,35 @@
+h1 Listing tasks
+
+table
+  tr
+    th Name
+    th Description
+    th Fromloc
+    th Toloc
+    th Spendtime
+    th Calldate
+    th Enddate
+    th Giftcon
+    th Price
+    th
+    th
+    th
+
+  - @tasks.each do |task|
+    tr
+      td = task.name
+      td = task.description
+      td = task.fromloc
+      td = task.toloc
+      td = task.spendtime
+      td = task.calldate
+      td = task.enddate
+      td = task.giftcon
+      td = task.price
+      td = link_to 'Show', task
+      td = link_to 'Edit', edit_task_path(task)
+      td = link_to 'Destroy', task, :confirm => 'Are you sure?', :method => :delete
+
+br
+
+= link_to 'New Task', new_task_path

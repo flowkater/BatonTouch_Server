@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  description: MyString
+  fromloc: MyString
+  toloc: MyString
+  spendtime: MyString
+  calldate: MyString
+  enddate: MyString
+  giftcon: MyString
+  price: MyString
+
+two:
+  name: MyString
+  description: MyString
+  fromloc: MyString
+  toloc: MyString
+  spendtime: MyString
+  calldate: MyString
+  enddate: MyString
+  giftcon: MyString
+  price: MyString

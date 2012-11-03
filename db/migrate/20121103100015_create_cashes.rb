@@ -1,0 +1,11 @@
+class CreateCashes < ActiveRecord::Migration
+  def change
+    create_table :cashes do |t|
+    	t.integer :cookie, null: false, default: 0
+    	t.references :cookiable, polymorphic: true
+
+      t.timestamps
+    end
+    add_index :cashes, [:cookiable_id, :cookiable_type], unique: true
+  end
+end

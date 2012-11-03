@@ -5,3 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+User.create!(email:"foobar@foobar.com",password:"foobar",password_confirmation:"foobar")
+Task.create!(name:"foobarTASK")

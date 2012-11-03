@@ -11,7 +11,49 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030045648) do
+ActiveRecord::Schema.define(:version => 20121103102827) do
+
+  create_table "cashes", :force => true do |t|
+    t.integer  "cookie",         :default => 0, :null => false
+    t.integer  "cookiable_id"
+    t.string   "cookiable_type"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "cashes", ["cookiable_id", "cookiable_type"], :name => "index_cashes_on_cookiable_id_and_cookiable_type", :unique => true
+
+  create_table "pictures", :force => true do |t|
+    t.string   "name"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "fromloc"
+    t.string   "toloc"
+    t.string   "spendtime"
+    t.string   "calldate"
+    t.string   "enddate"
+    t.string   "giftcon"
+    t.string   "price"
+    t.integer  "status"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "tradestats", :force => true do |t|
+    t.integer  "status"
+    t.integer  "user_id"
+    t.integer  "task_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
