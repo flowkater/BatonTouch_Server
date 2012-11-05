@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103102827) do
+ActiveRecord::Schema.define(:version => 20121105024450) do
 
   create_table "cashes", :force => true do |t|
     t.integer  "cookie",         :default => 0, :null => false
@@ -23,12 +23,29 @@ ActiveRecord::Schema.define(:version => 20121103102827) do
 
   add_index "cashes", ["cookiable_id", "cookiable_type"], :name => "index_cashes_on_cookiable_id_and_cookiable_type", :unique => true
 
+  create_table "giftcons", :force => true do |t|
+    t.string   "authkey"
+    t.integer  "giftconable_id"
+    t.string   "giftconable_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
   create_table "pictures", :force => true do |t|
     t.string   "name"
     t.integer  "imageable_id"
     t.string   "imageable_type"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "reviews", :force => true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "target_id"
+    t.integer  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tasks", :force => true do |t|
@@ -39,12 +56,10 @@ ActiveRecord::Schema.define(:version => 20121103102827) do
     t.string   "spendtime"
     t.string   "calldate"
     t.string   "enddate"
-    t.string   "giftcon"
-    t.string   "price"
-    t.integer  "status"
+    t.integer  "status",      :default => 0, :null => false
     t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "tradestats", :force => true do |t|
@@ -63,6 +78,9 @@ ActiveRecord::Schema.define(:version => 20121103102827) do
     t.string   "name"
     t.string   "oauth_token"
     t.datetime "oauth_expires_at"
+    t.string   "company"
+    t.string   "phone"
+    t.text     "introduce"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 class Task < ActiveRecord::Base
-	before_save :default_status
+	# before_save :default_status
 	after_create :cookiecreate
 
 	# User 귀속
@@ -11,6 +11,9 @@ class Task < ActiveRecord::Base
 
 	# Cash polymorphic
 	has_many :cashes, as: :cookiable
+
+	# Giftcon polymorphic
+  has_many :giftcons, as: :giftconable
 
 	# Task's cookie
 	def cookie
@@ -26,9 +29,9 @@ class Task < ActiveRecord::Base
 	#  -1 : 만료
 	# ect : Error
 
-	def default_status
-		self.status ||= 0
-	end
+	# def default_status
+	# 	self.status ||= 0
+	# end
 
   def cookiecreate
     self.cashes.create!

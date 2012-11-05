@@ -1,9 +1,8 @@
 # encoding: UTF-8
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  # :confirmable, :lockable, :timeoutable
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable, :token_authenticatable
 
   # token 유저 생성시 생성, 기본 cookie 생성
@@ -24,6 +23,12 @@ class User < ActiveRecord::Base
 
   # Picture polymorphic
   has_many :pictures, as: :imageable
+
+  # Giftcon polymorphic
+  has_many :giftcons, as: :giftconable
+
+  # Review
+  has_many :reviews
 
   # User's cookie
   def cookie
