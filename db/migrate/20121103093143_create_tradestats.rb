@@ -1,8 +1,8 @@
 class CreateTradestats < ActiveRecord::Migration
   def change
     create_table :tradestats do |t|
-    	t.integer :status
-    	t.integer :user_id
+    	t.boolean :status, null: false, default: false
+    	t.integer :client_id
     	t.integer :task_id
 
       t.timestamps

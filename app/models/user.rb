@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   has_many :tasks
 
   # TradeStats (Client 거래 상태)
-  has_many :tradestats
+  has_many :tradestats, foreign_key: "client_id"
 
   # Cash polymorphic
   has_many :cashes, as: :cookiable

@@ -1,13 +1,14 @@
 # encoding: UTF-8
 class Task < ActiveRecord::Base
 	# before_save :default_status
+	paginates_per 5
 	after_create :cookiecreate
 
 	# User 귀속
 	belongs_to :user
 
 	# Client Status
-	has_many :tradestats
+	has_many :tradestats, dependent: :destroy
 
 	# Cash polymorphic
 	has_many :cashes, as: :cookiable
@@ -18,6 +19,10 @@ class Task < ActiveRecord::Base
 	# Task's cookie
 	def cookie
 		cashes.first.cookie
+	end
+
+	def clients
+		tradestats.each {|t| clients << t.client}
 	end
 
 	protected

@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105024450) do
+ActiveRecord::Schema.define(:version => 20121105144140) do
+
+  create_table "api_keys", :force => true do |t|
+    t.string   "access_token"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "cashes", :force => true do |t|
     t.integer  "cookie",         :default => 0, :null => false
@@ -63,11 +69,11 @@ ActiveRecord::Schema.define(:version => 20121105024450) do
   end
 
   create_table "tradestats", :force => true do |t|
-    t.integer  "status"
-    t.integer  "user_id"
+    t.boolean  "status",     :default => false, :null => false
+    t.integer  "client_id"
     t.integer  "task_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "users", :force => true do |t|

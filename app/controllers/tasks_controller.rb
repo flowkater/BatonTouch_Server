@@ -1,7 +1,4 @@
 class TasksController < ApplicationController
-  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-  # GET /tasks
-  # GET /tasks.json
   def index
     @tasks = Task.all
   end
@@ -10,11 +7,6 @@ class TasksController < ApplicationController
   # GET /tasks/1.json
   def show
     @task = Task.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @task }
-    end
   end
 
   # GET /tasks/new

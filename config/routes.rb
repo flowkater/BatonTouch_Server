@@ -1,4 +1,13 @@
+require 'api_constraints'
+
 Batontouchme::Application.routes.draw do
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: :true) do
+      resources :tasks do
+        resources :tradestats, only: [:create, :destroy, :update]
+      end
+    end
+  end
 
   resources :tasks
 
@@ -10,7 +19,7 @@ Batontouchme::Application.routes.draw do
   match "/check_mobile_login", to: 'main#check_mobile_login' # check_mobile_login(Facebook)
 
   # devise_scope :user do
-  #   resources :sessions, only: [:create, :destroy] # Session 생성
+  #   resources :sessions, only: [:create, :destroy] # Session 
   # end
 
 
