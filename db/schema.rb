@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(:version => 20121105144140) do
     t.datetime "updated_at",                    :null => false
   end
 
+  add_index "tradestats", ["client_id", "task_id"], :name => "index_tradestats_on_client_id_and_task_id", :unique => true
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false

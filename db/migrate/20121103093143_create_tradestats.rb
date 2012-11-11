@@ -7,5 +7,6 @@ class CreateTradestats < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :tradestats, [:client_id, :task_id], unique: true
   end
 end

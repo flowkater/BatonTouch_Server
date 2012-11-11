@@ -5,18 +5,31 @@ Batontouchme::Application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: :true) do
       resources :tasks do
         resources :tradestats, only: [:create, :destroy, :update]
+        collection do
+          get 'askedbatons'
+          get 'mytaskbatons'
+        end
+
+        member do
+          put 'selectclient'
+        end
       end
+      devise_scope :user do
+        resources :sessions, only: [:create, :destroy]
+        post 'registrations' => 'registrations#create'
+      end
+      match "/check_mobile_login", to: 'main#check_mobile_login', via: :get # check_mobile_login(Facebook)
     end
   end
 
-  resources :tasks
+  # resources :tasks
 
   match "/home", to: "main#home"
   root to: "main#home"
   
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}, 
-              controllers: { omniauth_callbacks: "omniauth_callbacks", sessions:"sessions"}
-  match "/check_mobile_login", to: 'main#check_mobile_login' # check_mobile_login(Facebook)
+              controllers: { omniauth_callbacks: "omniauth_callbacks"}
+  
 
   # devise_scope :user do
   #   resources :sessions, only: [:create, :destroy] # Session 

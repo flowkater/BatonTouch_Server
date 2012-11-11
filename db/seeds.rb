@@ -6,9 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create!(email:"foobar@foobar.com",password:"foobar",password_confirmation:"foobar")
-User.create!(email:"doobar@doobar.com",password:"doobar",password_confirmation:"doobar")
+User.create!(email: "foobar@foobar.com" ,password: "foobar" ,password_confirmation: "foobar" )
+User.create!(email: "doobar@doobar.com" ,password: "doobar" ,password_confirmation: "doobar" )
 
-(1..20).each {|x| Task.create!(name: "name #{x}",description:"description #{x}",fromloc:"fromloc #{x}",toloc:"toloc #{x}",spendtime:"spendtime #{x}",calldate:"calldate #{x}",enddate:"enddate #{x}")}
+(1..20).each {|x| Task.create!(name: "name #{x}",description:"description #{x}",fromloc:"fromloc #{x}",toloc:"toloc #{x}",spendtime:"spendtime #{x}",calldate:"calldate #{x}",enddate:"enddate #{x}",user_id: 1)}
 
 ApiKey.create!

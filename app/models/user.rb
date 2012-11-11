@@ -30,9 +30,23 @@ class User < ActiveRecord::Base
   # Review
   has_many :reviews
 
+  # 내가 비딩한 태스크들
+  def bid_tasks
+    tradestats.all.map{|t| t.task}
+  end
+
   # User's cookie
   def cookie
     cashes.first.cookie
+  end
+
+  # Task_id 로 해당 클라이언트의 tradestat 아이디 가져오기
+  def task_tradestat(task_id)
+    begin
+      tradestats.find(:first, conditions:{task_id: task_id}).id
+    rescue
+      nil     
+    end
   end
 
   # facebook Koala API 선언
