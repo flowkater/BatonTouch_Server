@@ -49,6 +49,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  # 현재 유저의 태스크들을 제외하고 리턴
+  def exclusive_current_user_task(alltasks)
+    alltasks.reject{|t| tasks.include? t}
+  end
+
   # facebook Koala API 선언
   def facebook
     @facebook ||= Koala::Facebook::API.new(oauth_token)

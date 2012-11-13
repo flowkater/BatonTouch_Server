@@ -6,7 +6,7 @@ class Api::V1::TradestatsController < ApplicationController
 	def create
 		@tradestat = current_user.tradestats.build(task_id: params[:task_id])
 
-		if @tradestat.save
+		if @tradestat.save!
 			render status: :created, json: @tradestat
 		else
 			render status: :unprocessable_entity, json: {response:"unprocessable_entity"}

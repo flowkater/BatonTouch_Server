@@ -6,11 +6,15 @@ class Api::V1::TasksController < ApplicationController
 
 	def index
 		@tasks = Task.page(params[:page])
+		# @tasks = Task.all.reject {|t| current_user.tasks.include? t}.page(params[:page])
 		render "tasks/v1/index"
 	end
 
 	def show
 		@task = Task.find(params[:id])
+		@status = @task.status
+		@user = @task.user
+		@clients = @task.clients
 		render "tasks/v1/show"
 	end
 
@@ -44,14 +48,53 @@ class Api::V1::TasksController < ApplicationController
 		render "tasks/v1/mytaskbatons"
 	end
 
-	# Select Put action
+	# Select Client Put action
 	def selectclient
 		@task = Task.find(params[:id])
 		@tradestat = Tradestat.find(params[:tradestat_id])
-		@task.status = 1
+		@task.status = 1 # 진행
 
 		if @task.save && @tradestat.is_selected
 			render status: :ok, json: {response: 'select_success'}
+		else
+			render status: :unprocessable_entity, json: {response: 'error'}
+		end
+	end
+
+	# Client Complete Put action
+	def clientcomplete
+		@task = Task.find(params[:id])
+		@tradestat = Tradestat.find(params[:tradestat_id])
+		@task.status = 2 # 클라이언트 완료
+
+		if @task.save
+			render status: :ok, json: {response: 'clientcomplete_success'}
+		else
+			render status: :unprocessable_entity, json: {response: 'error'}
+		end
+	end
+
+	# User confirm Yes Put action
+	def userconfirm_yes
+		@task = Task.find(params[:id])
+		@tradestat = Tradestat.find(params[:tradestat_id])
+		@task.status = 3 # Task 완료
+
+		if @task.save
+			render status: :ok, json: {response: 'userconfirm_yes_success'}
+		else
+			render status: :unprocessable_entity, json: {response: 'error'}
+		end
+	end
+
+	# User confirm No Put action
+	def userconfirm_no
+		@task = Task.find(params[:id])
+		@tradestat = Tradestat.find(params[:tradestat_id])
+		@task.status = -1 # Task 만료
+
+		if @task.save
+			render status: :ok, json: {response: 'userconfirm_no_success'}
 		else
 			render status: :unprocessable_entity, json: {response: 'error'}
 		end

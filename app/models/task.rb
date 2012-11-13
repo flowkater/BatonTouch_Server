@@ -16,6 +16,13 @@ class Task < ActiveRecord::Base
 	# Giftcon polymorphic
   has_many :giftcons, as: :giftconable
 
+  # Category - Task
+  has_many :categorizations
+  has_many :categories, through: :categorizations
+
+  # Has many tasks
+  has_many :tasks
+
 	# Task's cookie
 	def cookie
 		cashes.first.cookie
@@ -23,7 +30,11 @@ class Task < ActiveRecord::Base
 
 	# Current Task's 클라이언트
 	def clients
-		tradestats.all.map{|t| t.client}
+		if status == 0
+			tradestats.all.map{|t| t.client}
+		else
+			select_client # Status 가 바뀌면 select 되기때문에 select_client 부름
+		end
 	end
 
 	# Task's 선택된 클라이언트 호출
@@ -31,8 +42,15 @@ class Task < ActiveRecord::Base
 		tradestats.collect{|t| t.client if t.status == true}.first
 	end
 
+	# 이 유저가 비딩을 했는지...
 	def check_client(current_user)
-		clients
+		tradestats.select{|t| current_user.id == t.client_id}.first
+	end
+
+	# status Change ing..
+	def status_change(stat)
+		status = stat
+		save!
 	end
 
 	# 현재 태스크에 비딩한 클라이언트 수
@@ -43,6 +61,11 @@ class Task < ActiveRecord::Base
 	# 유저 정보로 해당되는 tradestat 아이디 가져오기
 	def client_tradestat(client_id)
 		tradestats.find(:first, conditions:{client_id: client_id}).id
+	end
+
+	# formatting 된 created_at
+	def day
+		created_at.strftime("%Y. %m. %d.")
 	end
 
 	protected

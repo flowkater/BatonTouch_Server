@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121105144140) do
+ActiveRecord::Schema.define(:version => 20121112081535) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "access_token"
@@ -28,6 +28,22 @@ ActiveRecord::Schema.define(:version => 20121105144140) do
   end
 
   add_index "cashes", ["cookiable_id", "cookiable_type"], :name => "index_cashes_on_cookiable_id_and_cookiable_type", :unique => true
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "categorizations", :force => true do |t|
+    t.integer  "category_id"
+    t.integer  "task_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "categorizations", ["category_id"], :name => "index_categorizations_on_category_id"
+  add_index "categorizations", ["task_id"], :name => "index_categorizations_on_task_id"
 
   create_table "giftcons", :force => true do |t|
     t.string   "authkey"
@@ -47,8 +63,10 @@ ActiveRecord::Schema.define(:version => 20121105144140) do
 
   create_table "reviews", :force => true do |t|
     t.text     "content"
+    t.integer  "star"
     t.integer  "user_id"
     t.integer  "target_id"
+    t.integer  "task_id"
     t.integer  "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -56,12 +74,12 @@ ActiveRecord::Schema.define(:version => 20121105144140) do
 
   create_table "tasks", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.string   "fromloc"
     t.string   "toloc"
     t.string   "spendtime"
-    t.string   "calldate"
-    t.string   "enddate"
+    t.datetime "calldate"
+    t.datetime "enddate"
     t.integer  "status",      :default => 0, :null => false
     t.integer  "user_id"
     t.datetime "created_at",                 :null => false
@@ -89,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20121105144140) do
     t.string   "company"
     t.string   "phone"
     t.text     "introduce"
+    t.boolean  "client_status"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

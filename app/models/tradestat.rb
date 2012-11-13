@@ -8,4 +8,8 @@ class Tradestat < ActiveRecord::Base
 		status = true
 		save!
 	end
+
+	def exist_tradestat
+		
+	end
 end

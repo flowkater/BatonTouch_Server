@@ -12,6 +12,9 @@ Batontouchme::Application.routes.draw do
 
         member do
           put 'selectclient'
+          put 'clientcomplete'
+          put 'userconfirm_yes'
+          put 'userconfirm_no'
         end
       end
       devise_scope :user do
