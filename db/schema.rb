@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
     t.string   "company"
     t.string   "phone"
     t.text     "introduce"
-    t.boolean  "client_status"
+    t.boolean  "client_status",                          :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

@@ -6,7 +6,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
 	def create
 		warden.authenticate!(scope: resource_name, recall: "#{controller_path}#new")
-		render status: 200, json:{session:{error:"Success", auth_token: current_user.authentication_token}}
+		render status: 200, json:{session:{error:"Success", auth_token: current_user.authentication_token, client_status: current_user.client_status}}
 	end
 
 	def destroy

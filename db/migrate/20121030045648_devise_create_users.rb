@@ -17,7 +17,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :company # 소속, 학교, 직장 등등
       t.string :phone # 인증 전화번호
       t.text :introduce  # 자기 소개
-      t.boolean :client_status, defult: false
+      t.boolean :client_status, null: false,defult: false
 
       ## Recoverable
       t.string   :reset_password_token

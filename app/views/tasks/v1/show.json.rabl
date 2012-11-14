@@ -9,8 +9,16 @@ node(:current_user) do |task|
 	end
 end
 
+child @giftcon => :giftcon do
+	attributes :id, :authkey, :store_id, :item_id
+end
+
 child @user => :user do
 	attributes :id, :name
+end
+
+child @reviews => :reviews do
+	attributes :star, :status
 end
 
 if @status == 0

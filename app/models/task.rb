@@ -13,15 +13,15 @@ class Task < ActiveRecord::Base
 	# Cash polymorphic
 	has_many :cashes, as: :cookiable
 
-	# Giftcon polymorphic
-  has_many :giftcons, as: :giftconable
+	# Giftcon
+  has_many :giftcons
 
   # Category - Task
   has_many :categorizations
   has_many :categories, through: :categorizations
 
-  # Has many tasks
-  has_many :tasks
+  # Has many Reviews
+  has_many :reviews
 
 	# Task's cookie
 	def cookie

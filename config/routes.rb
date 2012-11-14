@@ -17,10 +17,20 @@ Batontouchme::Application.routes.draw do
           put 'userconfirm_no'
         end
       end
+
+      resources :users, only: [:show] do
+        collection do
+          get 'user_current'
+        end
+      end
+      
       devise_scope :user do
         resources :sessions, only: [:create, :destroy]
         post 'registrations' => 'registrations#create'
       end
+
+      resources :reviews, only: [:create, :show]
+
       match "/check_mobile_login", to: 'main#check_mobile_login', via: :get # check_mobile_login(Facebook)
     end
   end

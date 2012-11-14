@@ -13,7 +13,8 @@ class CreateTasks < ActiveRecord::Migration
       #  0  : 대기중
       #  1  : 진행중
       #  2  : 클라이언트 완료 --
-      #  3  : Task 완료 -- 2, 3 똑같은 완료 상태
+      #  3  : Task 완료 -- 2, 3 똑같은 완료 상태, Review 를 써야 하는 상태
+      #  4  : Review 까지 모두 다 쓴 상태
       #  -1 : 만료
       # etc : Error
       t.references :user # 생성한 유저 정보

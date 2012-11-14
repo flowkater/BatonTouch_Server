@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   after_create :cookiecreate
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :name, :oauth_token
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :name, :oauth_token, :phone, :introduce, :client_status
 
   # Task 관계
   has_many :tasks
@@ -24,8 +24,8 @@ class User < ActiveRecord::Base
   # Picture polymorphic
   has_many :pictures, as: :imageable
 
-  # Giftcon polymorphic
-  has_many :giftcons, as: :giftconable
+  # Giftcon Client have
+  has_many :giftcons
 
   # Review
   has_many :reviews

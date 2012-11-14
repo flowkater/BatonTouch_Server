@@ -15,13 +15,16 @@ class Api::V1::TasksController < ApplicationController
 		@status = @task.status
 		@user = @task.user
 		@clients = @task.clients
+		@reviews = @task.reviews
+		@giftcon = @task.giftcons.first
 		render "tasks/v1/show"
 	end
 
 	def create
 		@task = current_user.tasks.build(params[:task])
+		@giftcon = Giftcon.new(store_id: params[:store_id], item_id: params[:item_id])
 
-		if @task.save
+		if @task.save && @giftcon
 			render status: :created, json: {response: "success_create"}
 		else
 			render status: :unprocessable_entity, json: {response: 'error'}
@@ -64,7 +67,6 @@ class Api::V1::TasksController < ApplicationController
 	# Client Complete Put action
 	def clientcomplete
 		@task = Task.find(params[:id])
-		@tradestat = Tradestat.find(params[:tradestat_id])
 		@task.status = 2 # 클라이언트 완료
 
 		if @task.save
@@ -77,7 +79,6 @@ class Api::V1::TasksController < ApplicationController
 	# User confirm Yes Put action
 	def userconfirm_yes
 		@task = Task.find(params[:id])
-		@tradestat = Tradestat.find(params[:tradestat_id])
 		@task.status = 3 # Task 완료
 
 		if @task.save
@@ -90,7 +91,6 @@ class Api::V1::TasksController < ApplicationController
 	# User confirm No Put action
 	def userconfirm_no
 		@task = Task.find(params[:id])
-		@tradestat = Tradestat.find(params[:tradestat_id])
 		@task.status = -1 # Task 만료
 
 		if @task.save
