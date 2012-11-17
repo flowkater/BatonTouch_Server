@@ -6,7 +6,9 @@ class CreateReviews < ActiveRecord::Migration
       t.integer :user_id
       t.integer :target_id
       t.integer :task_id
-      t.integer :status # status 에 따라서 유저가 클라이언트냐, 클라이언트가 유저에게 쓴거냐 구분
+      t.integer :status, null: false # status 에 따라서 유저가 클라이언트냐, 클라이언트가 유저에게 쓴거냐 구분
+
+      # Client 가 User 에게 할때는 항목을 create
 
       t.timestamps
     end

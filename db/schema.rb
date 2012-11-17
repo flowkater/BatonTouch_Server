@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121112081535) do
+ActiveRecord::Schema.define(:version => 20121114094835) do
 
   create_table "api_keys", :force => true do |t|
     t.string   "access_token"
@@ -20,11 +20,11 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
   end
 
   create_table "cashes", :force => true do |t|
-    t.integer  "cookie",         :default => 0, :null => false
+    t.decimal  "cookie",         :default => 0.0, :null => false
     t.integer  "cookiable_id"
     t.string   "cookiable_type"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "cashes", ["cookiable_id", "cookiable_type"], :name => "index_cashes_on_cookiable_id_and_cookiable_type", :unique => true
@@ -47,10 +47,25 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
 
   create_table "giftcons", :force => true do |t|
     t.string   "authkey"
-    t.integer  "giftconable_id"
-    t.string   "giftconable_type"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer  "store_id"
+    t.integer  "giftitem_id"
+    t.integer  "task_id"
+    t.integer  "client_id"
+    t.boolean  "status",      :default => false, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "giftitems", :force => true do |t|
+    t.string   "name"
+    t.string   "image"
+    t.text     "description"
+    t.date     "fromdate"
+    t.date     "todate"
+    t.float    "price"
+    t.integer  "store_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "pictures", :force => true do |t|
@@ -72,6 +87,12 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "stores", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -80,10 +101,11 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
     t.string   "spendtime"
     t.datetime "calldate"
     t.datetime "enddate"
-    t.integer  "status",      :default => 0, :null => false
+    t.integer  "status",      :default => 0,   :null => false
+    t.float    "cookie",      :default => 0.0, :null => false
     t.integer  "user_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "tradestats", :force => true do |t|
@@ -97,8 +119,8 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
   add_index "tradestats", ["client_id", "task_id"], :name => "index_tradestats_on_client_id_and_task_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
@@ -107,7 +129,8 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
     t.string   "company"
     t.string   "phone"
     t.text     "introduce"
-    t.boolean  "client_status",                          :null => false
+    t.boolean  "client_status",          :default => false, :null => false
+    t.float    "cookie",                 :default => 0.0,   :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -117,8 +140,8 @@ ActiveRecord::Schema.define(:version => 20121112081535) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

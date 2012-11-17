@@ -1,7 +1,7 @@
 class CreateCashes < ActiveRecord::Migration
   def change
     create_table :cashes do |t|
-    	t.integer :cookie, null: false, default: 0 #쿠키 초기화 0
+    	t.decimal :cookie, null: false, default: 0 #쿠키 초기화 0
     	t.references :cookiable, polymorphic: true
 
       t.timestamps

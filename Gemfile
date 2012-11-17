@@ -28,6 +28,9 @@ gem 'rabl'
 # Pagination
 gem 'kaminari'
 
+# GCM
+gem 'gcm'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

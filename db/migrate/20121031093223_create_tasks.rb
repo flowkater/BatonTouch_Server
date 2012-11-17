@@ -9,6 +9,7 @@ class CreateTasks < ActiveRecord::Migration
       t.datetime :calldate # 연락주는 시간
       t.datetime :enddate # 끝나는 시간
       t.integer :status, null: false, default: 0 # 상태
+      t.float :cookie, null: false, default: 0 # 0 쿠키
       # status 
       #  0  : 대기중
       #  1  : 진행중

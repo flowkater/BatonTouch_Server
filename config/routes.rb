@@ -8,14 +8,19 @@ Batontouchme::Application.routes.draw do
         collection do
           get 'askedbatons'
           get 'mytaskbatons'
+          post 'task_create'
         end
-
+        
         member do
           put 'selectclient'
           put 'clientcomplete'
           put 'userconfirm_yes'
           put 'userconfirm_no'
         end
+      end
+
+      resources :giftitems, only: [:index, :show] do
+          get 'check'
       end
 
       resources :users, only: [:show] do
@@ -29,7 +34,9 @@ Batontouchme::Application.routes.draw do
         post 'registrations' => 'registrations#create'
       end
 
-      resources :reviews, only: [:create, :show]
+      resources :reviews, only: [:create, :show] do
+        post 'create_by_client'
+      end
 
       match "/check_mobile_login", to: 'main#check_mobile_login', via: :get # check_mobile_login(Facebook)
     end

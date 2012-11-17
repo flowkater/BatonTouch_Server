@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  image: MyString
+  description: MyText
+  fromdate: 2012-11-14
+  todate: 2012-11-14
+  store_id: 1
+
+two:
+  name: MyString
+  image: MyString
+  description: MyText
+  fromdate: 2012-11-14
+  todate: 2012-11-14
+  store_id: 1

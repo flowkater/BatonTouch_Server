@@ -1,3 +1,4 @@
+
 # encoding: UTF-8
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
@@ -17,7 +18,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :company # 소속, 학교, 직장 등등
       t.string :phone # 인증 전화번호
       t.text :introduce  # 자기 소개
-      t.boolean :client_status, null: false,defult: false
+      t.boolean :client_status, null: false, default: false
+      t.float :cookie, null: false, default: 0
 
       ## Recoverable
       t.string   :reset_password_token

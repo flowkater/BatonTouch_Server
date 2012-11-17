@@ -2,7 +2,7 @@
 class Task < ActiveRecord::Base
 	# before_save :default_status
 	paginates_per 7
-	after_create :cookiecreate
+	# after_create :cookiecreate
 
 	# User 귀속
 	belongs_to :user
@@ -11,7 +11,7 @@ class Task < ActiveRecord::Base
 	has_many :tradestats, dependent: :destroy
 
 	# Cash polymorphic
-	has_many :cashes, as: :cookiable
+	# has_many :cashes, as: :cookiable
 
 	# Giftcon
   has_many :giftcons
@@ -24,9 +24,9 @@ class Task < ActiveRecord::Base
   has_many :reviews
 
 	# Task's cookie
-	def cookie
-		cashes.first.cookie
-	end
+	# def cookie
+	# 	cashes.first.cookie
+	# end
 
 	# Current Task's 클라이언트
 	def clients
@@ -82,7 +82,7 @@ class Task < ActiveRecord::Base
 	# 	self.status ||= 0
 	# end
 
-  def cookiecreate
-    self.cashes.create!
-  end
+  # def cookiecreate
+  #   self.cashes.create!
+  # end
 end

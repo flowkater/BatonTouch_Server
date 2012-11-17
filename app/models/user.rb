@@ -7,10 +7,11 @@ class User < ActiveRecord::Base
 
   # token 유저 생성시 생성, 기본 cookie 생성
   before_save :ensure_authentication_token
-  after_create :cookiecreate
+  # after_create :cookiecreate
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :name, :oauth_token, :phone, :introduce, :client_status
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider,
+    :uid, :name, :oauth_token, :phone, :introduce, :client_status, :cookie
 
   # Task 관계
   has_many :tasks
@@ -19,7 +20,7 @@ class User < ActiveRecord::Base
   has_many :tradestats, foreign_key: "client_id"
 
   # Cash polymorphic
-  has_many :cashes, as: :cookiable
+  # has_many :cashes, as: :cookiable
 
   # Picture polymorphic
   has_many :pictures, as: :imageable
@@ -30,15 +31,29 @@ class User < ActiveRecord::Base
   # Review
   has_many :reviews
 
+  # Task create action cookie to Task
+  # def cookie_to_task(price)
+  #   user_cookie = self.cookie - price.to_f
+  #   if user_cookie < 0 #쿠키가 0이하 이면 에러
+  #     user_cookie = "error" # 이 때 String을 반납하니 task_create action 에서 error 가 날 것이다.
+  #   end
+  #   user_cookie # 리턴
+  # end
+
+  # cancel cookie back 
+  def cookie_back(price)
+    cookie + price
+  end
+
   # 내가 비딩한 태스크들
   def bid_tasks
     tradestats.all.map{|t| t.task}
   end
 
   # User's cookie
-  def cookie
-    cashes.first.cookie
-  end
+  # def cookie
+  #   cashes.first.cookie
+  # end
 
   # Task_id 로 해당 클라이언트의 tradestat 아이디 가져오기
   def task_tradestat(task_id)
@@ -110,7 +125,7 @@ class User < ActiveRecord::Base
 
   protected
 
-  def cookiecreate
-    self.cashes.create!
-  end
+  # def cookiecreate
+  #   self.cashes.create!
+  # end
 end
