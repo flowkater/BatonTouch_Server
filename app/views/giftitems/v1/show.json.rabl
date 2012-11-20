@@ -1,1 +1,1 @@
-show.json.rabl
+object @giftitem

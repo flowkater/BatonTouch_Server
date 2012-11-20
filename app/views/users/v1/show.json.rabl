@@ -1,4 +1,5 @@
 object @user
+
 attributes :id,:email,:name, :company,:phone,:introduce,:client_status, :provider, :cookie
 
 child @user.reviews => :reviews do

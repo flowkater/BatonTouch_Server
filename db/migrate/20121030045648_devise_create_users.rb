@@ -1,4 +1,3 @@
-
 # encoding: UTF-8
 class DeviseCreateUsers < ActiveRecord::Migration
   def change
@@ -20,6 +19,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :introduce  # 자기 소개
       t.boolean :client_status, null: false, default: false
       t.float :cookie, null: false, default: 0
+
+      ## Registration ID (GCM)
+      t.string :gcm_regid
 
       ## Recoverable
       t.string   :reset_password_token

@@ -18,6 +18,9 @@ gem 'oauth2'
 gem 'omniauth-facebook', '1.4.0'
 gem 'koala'
 
+# Active Admin
+gem 'activeadmin'
+
 # google geolocation
 gem 'gmaps4rails'
 gem 'geocoder'
@@ -30,6 +33,11 @@ gem 'kaminari'
 
 # GCM
 gem 'gcm'
+
+# Image
+gem 'rmagick'
+gem 'carrierwave'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -63,10 +71,10 @@ gem 'jquery-rails'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

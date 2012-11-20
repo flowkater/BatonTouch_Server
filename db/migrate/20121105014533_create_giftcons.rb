@@ -6,7 +6,7 @@ class CreateGiftcons < ActiveRecord::Migration
       t.integer :giftitem_id # 아이템 별 아이디
       t.integer :task_id # 생성된 task 의 아이디
       t.integer :client_id #전달받는 client_id
-      t.boolean :status, null:false, default: false
+      t.boolean :status, null: false, default: false
 
       t.timestamps
     end

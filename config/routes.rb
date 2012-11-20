@@ -1,6 +1,10 @@
 require 'api_constraints'
 
 Batontouchme::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   namespace :api, defaults: {format: 'json'} do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: :true) do
       resources :tasks do
@@ -19,8 +23,12 @@ Batontouchme::Application.routes.draw do
         end
       end
 
+      resources :stores, only: [:index, :show]
+
       resources :giftitems, only: [:index, :show] do
+        member do
           get 'check'
+        end
       end
 
       resources :users, only: [:show] do

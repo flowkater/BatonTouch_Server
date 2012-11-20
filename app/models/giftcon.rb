@@ -4,6 +4,8 @@ class Giftcon < ActiveRecord::Base
 	belongs_to :client, class_name: "User", foreign_key: "client_id"
 	belongs_to :task
 	belongs_to :giftitem
+
+	has_many :pictures, as: :imageable
  
 	private
 
