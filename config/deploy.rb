@@ -5,6 +5,7 @@ set :application, "BatonTouch_Server"
 set :scm, :git
 set :repository, "git@github.com:ChoJaewoo/BatonTouch_Server.git"
 set :branch, "master"
+set :scm_passphrase, "chjw102"
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 set :eip, "50.17.220.120"
@@ -20,7 +21,9 @@ set :use_sudo, false
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
-# ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "chjw]
+# ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "chjw102"]
+
+set :default_environment, { "PATH" => "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$HOME/.rbenv/versions/1.9.3-p125/bin:$HOME/.rbenv/versions/1.9.3-p125/lib/ruby/gems/1.9.1/gems:$PATH"}
 
 after "deploy", "deploy:cleanup"
 
