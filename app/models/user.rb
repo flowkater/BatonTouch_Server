@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
     gcm = GCM.new(api_key)
     registration_ids = []
     registration_ids << gcm_regid
-    options = {data: message, collapse_key: "user_push"}
+    options = {data: {text: message}, collapse_key: "user_push"}
     # options = {data: {score: "123"}, collapse_key: "updated_score"}
     response = gcm.send_notification(registration_ids, options)
   end

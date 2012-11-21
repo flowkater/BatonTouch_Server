@@ -33,11 +33,18 @@ class Api::V1::TasksController < ApplicationController
 		@user_cookie = current_user.cookie - @price.to_f
 		@task.cookie = @price
 		@giftcon = @task.giftcons.build(store_id: params[:store_id], giftitem_id: params[:giftitem_id])
-
-		if @task.save && @user_cookie >= 0 && current_user.update_attributes(cookie: @user_cookie) && @giftcon.save
-			render status: :created, json: {response: "success_create"}
-		else
-			render status: :unprocessable_entity, json: {response: 'error'}
+		if @user_cookie >= 0
+			Task.transaction do
+				begin
+					@task.save!
+					current_user.update_attributes!(cookie: @user_cookie)
+					@giftcon.save!
+					render status: :created, json: {response: "success_create"}
+				rescue ActiveRecord::RecordInvalid
+					render status: :unprocessable_entity, json: {response: 'error'}
+					raise ActiveRecord::Rollback
+				end
+			end
 		end
 	end
 
@@ -69,10 +76,15 @@ class Api::V1::TasksController < ApplicationController
 		@tradestat = Tradestat.find(params[:tradestat_id])
 		@task.status = 1 # 진행
 
-		if @task.save && @tradestat.is_selected
-			render status: :ok, json: {response: 'select_success'}
-		else
-			render status: :unprocessable_entity, json: {response: 'error'}
+		Task.transaction do
+			begin
+				@task.save!
+				@tradestat.is_selected
+				render status: :ok, json: {response: 'select_success'}	
+			rescue ActiveRecord::RecordInvalid
+				render status: :unprocessable_entity, json: {response: 'error'}
+				raise ActiveRecord::Rollback
+			end
 		end
 	end
 
@@ -116,10 +128,15 @@ class Api::V1::TasksController < ApplicationController
 	def destroy
 		@task = Task.find(params[:id])
 
-		if current_user.update_attributes(cookie: @task.cookie) && @task.destroy
-			render status: :no_content, json: {response: 'delete_success'}	
-		else
-			render status: :unprocessable_entity, json: {response: 'error'}
+		Task.transaction do
+			begin
+				current_user.update_attributes!(cookie: @task.cookie)
+				@task.destroy
+				render status: :no_content, json: {response: 'delete_success'}	
+			rescue ActiveRecord::RecordInvalid
+				render status: :unprocessable_entity, json: {response: 'error'}
+				raise ActiveRecord::Rollback
+			end
 		end
 	end
 

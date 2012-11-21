@@ -2,6 +2,7 @@ class Store < ActiveRecord::Base
 	attr_accessible :name
 
 	has_many :giftitems
+	
 	# Picture polymorphic
   has_many :pictures, as: :imageable
 

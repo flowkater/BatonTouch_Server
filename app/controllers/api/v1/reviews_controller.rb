@@ -5,6 +5,7 @@ class Api::V1::ReviewsController < ApplicationController
 	before_filter :authenticate_user!
 	respond_to :json
 
+	
 	def show
 		@review = Review.find(params[:id])
 	end
@@ -13,9 +14,10 @@ class Api::V1::ReviewsController < ApplicationController
 	def create
 		@review = current_user.reviews.build(params[:review])
 
-		if @review.save
+		if @review.save!
 			render status: :created, json: {response: "success_created"}
 		else
+
 			render status: :unprocessable_entity, json: {response: 'error'}
 		end
 	end
@@ -23,13 +25,18 @@ class Api::V1::ReviewsController < ApplicationController
 	# Client 가 User에게 리뷰...
 	def create_by_client
 		@review = current_user.reviews.build(params[:review])
-		@task = Task.find(params[:task_id])
+		@task = Task.find(params[:review][:task_id])
 		@giftcon = @task.giftcons.first
 
-		if @giftcon.update_attributes(client_id: current_user.id) && @review.save
-			render status: :created, json: {response: "review & success"}
-		else
-			render status: :unprocessable_entity, json: {response: 'error'}
+		Review.transaction do
+			begin
+				@giftcon.update_attributes!(client_id: current_user.id)
+				@review.save!
+				render status: :created, json: {response: "review & success"}
+			rescue ActiveRecord::RecordInvalid
+				render status: :unprocessable_entity, json: {response: 'error'}
+				raise ActiveRecord::Rollback
+			end
 		end
 	end
 

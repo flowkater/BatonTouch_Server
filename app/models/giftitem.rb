@@ -8,4 +8,10 @@ class Giftitem < ActiveRecord::Base
   		pictures.first.image_url(:thumb)
   	end
   end
+
+  def picture_medium
+    if pictures.first.image_url(:medium)
+      pictures.first.image_url(:medium)
+    end
+  end
 end

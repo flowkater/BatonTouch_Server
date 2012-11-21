@@ -43,7 +43,9 @@ Batontouchme::Application.routes.draw do
       end
 
       resources :reviews, only: [:create, :show] do
-        post 'create_by_client'
+        collection do
+          post 'create_by_client'
+        end
       end
 
       match "/check_mobile_login", to: 'main#check_mobile_login', via: :get # check_mobile_login(Facebook)
