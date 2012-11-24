@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider,
-    :uid, :name, :oauth_token, :phone, :introduce, :client_status, :cookie, :gcm_regid
+    :uid, :name, :oauth_token, :phone, :introduce, :client_status, :cookie, :gcm_regid, :profile_image
 
   # Task 관계
   has_many :tasks
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
     gcm = GCM.new(api_key)
     registration_ids = []
     registration_ids << gcm_regid
-    options = {data: {text: message}, collapse_key: "user_push"}
+    options = {data: {text: message}, collapse_key: Time.now}
     # options = {data: {score: "123"}, collapse_key: "updated_score"}
     response = gcm.send_notification(registration_ids, options)
   end

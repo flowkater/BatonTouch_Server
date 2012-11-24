@@ -5,6 +5,8 @@ class Api::V1::TasksController < ApplicationController
 	before_filter :restrict_access
 	respond_to :json
 
+	### @user.delay.gcm_send(message)
+
 	def index
 		@tasks = Task.page(params[:page])
 		# @tasks = Task.all.reject {|t| current_user.tasks.include? t}.page(params[:page])
@@ -80,6 +82,7 @@ class Api::V1::TasksController < ApplicationController
 			begin
 				@task.save!
 				@tradestat.is_selected
+				@tradestat.client.gcm_send("러너로 선택되셨습니다. 바톤을 수행해주세요!")
 				render status: :ok, json: {response: 'select_success'}	
 			rescue ActiveRecord::RecordInvalid
 				render status: :unprocessable_entity, json: {response: 'error'}
@@ -94,6 +97,7 @@ class Api::V1::TasksController < ApplicationController
 		@task.status = 2 # 클라이언트 완료
 
 		if @task.save
+			@task.user.delay.gcm_send("러너가 일을 완료했어요! 확인 해주세요.")
 			render status: :ok, json: {response: 'clientcomplete_success'}
 		else
 			render status: :unprocessable_entity, json: {response: 'error'}

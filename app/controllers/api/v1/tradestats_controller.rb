@@ -3,11 +3,14 @@ class Api::V1::TradestatsController < ApplicationController
 	skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
 	before_filter :restrict_access
 	respond_to :json
+	### @user.delay.gcm_send(message)
 
 	def create
 		@tradestat = current_user.tradestats.build(task_id: params[:task_id])
+		@task = Task.find(params[:task_id])
 
 		if @tradestat.save!
+			@task.user.delay.gcm_send("당신을 도와줄 러너가 나타났어요!")
 			render status: :created, json: @tradestat
 		else
 			render status: :unprocessable_entity, json: {response:"unprocessable_entity"}

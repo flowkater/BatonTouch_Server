@@ -27,7 +27,15 @@ class Api::V1::MainController < ApplicationController
     if logged
       logged
     else
-      User.create!(email: user['email'],provider: "facebook",uid: user['id'],name: user['name'],oauth_token: token)
+      User.transaction do
+        begin
+          @user = User.create!(email: user['email'],provider: "facebook",uid: user['id'],name: user['name'],oauth_token: token, profile_image: "http://graph.facebook.com/#{user['id']}/picture?type=large")
+        rescue ActiveRecord::RecordInvalid
+          render status: :unprocessable_entity, json: {response: 'error'}
+          raise ActiveRecord::Rollback
+        end
+      end
+      @user
     end
   end
 end

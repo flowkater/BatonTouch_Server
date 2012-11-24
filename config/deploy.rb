@@ -1,4 +1,5 @@
 require "bundler/capistrano"
+require "delayed/recipes"
 
 set :application, "BatonTouch_Server"
 
@@ -18,6 +19,7 @@ set :user, "ubuntu"
 set :deploy_to, "/home/#{user}/apps/#{application}"
 set :deploy_via, :remote_cache
 set :use_sudo, false
+set :rails_env, "production"
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true

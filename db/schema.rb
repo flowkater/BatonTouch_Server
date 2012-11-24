@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20121119110716) do
     t.text     "introduce"
     t.boolean  "client_status",          :default => false, :null => false
     t.float    "cookie",                 :default => 0.0,   :null => false
+    t.string   "profile_image"
     t.string   "gcm_regid"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

@@ -19,6 +19,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.text :introduce  # 자기 소개
       t.boolean :client_status, null: false, default: false
       t.float :cookie, null: false, default: 0
+      t.string :profile_image
 
       ## Registration ID (GCM)
       t.string :gcm_regid
