@@ -39,8 +39,8 @@ gem 'rmagick'
 gem 'carrierwave'
 
 # Delayed Job
-gem 'daemon'
 gem 'delayed_job_active_record'
+gem 'daemon'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -7,5 +7,8 @@ child @user.reviews => :reviews do
 end
 
 child @user.giftcons => :giftcons do
-	attributes :id, :authkey, :store_id, :item_id
+	attributes :id
+	node(:name) {|g| g.giftitem.name }
+	node(:image) {|g| g.giftitem.picture_medium }
+	node(:price) {|g| g.giftitem.price }
 end

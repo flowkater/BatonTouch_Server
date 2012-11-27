@@ -13,12 +13,17 @@ class Api::V1::ReviewsController < ApplicationController
 	# User 가 클라이언트에게 리뷰..
 	def create
 		@review = current_user.reviews.build(params[:review])
+		@task = Task.find(params[:review][:task_id])
 
-		if @review.save!
-			render status: :created, json: {response: "success_created"}
-		else
-
-			render status: :unprocessable_entity, json: {response: 'error'}
+		Review.transaction do
+			begin
+				@review.save!
+				@task.update_attributes!(status: 4)
+				render status: :created, json: {response: "success_created"}	
+			rescue ActiveRecord::RecordInvalid
+				render status: :unprocessable_entity, json: {response: 'error'}
+				raise ActiveRecord::Rollback
+			end
 		end
 	end
 
@@ -26,10 +31,11 @@ class Api::V1::ReviewsController < ApplicationController
 	def create_by_client
 		@review = current_user.reviews.build(params[:review])
 		@task = Task.find(params[:review][:task_id])
-		@giftcon = @task.giftcons.first
+		@giftcon = @task.giftcon
 
 		Review.transaction do
 			begin
+				@task.update_attributes!(status: 4)
 				@giftcon.update_attributes!(client_id: current_user.id)
 				@review.save!
 				render status: :created, json: {response: "review & success"}

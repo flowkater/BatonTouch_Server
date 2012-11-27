@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider,
-    :uid, :name, :oauth_token, :phone, :introduce, :client_status, :cookie, :gcm_regid, :profile_image
+    :uid, :name, :oauth_token, :phone, :introduce, :client_status, :cookie, :gcm_regid, :profile_image, :company
 
   # Task 관계
   has_many :tasks
@@ -26,10 +26,13 @@ class User < ActiveRecord::Base
   has_many :pictures, as: :imageable
 
   # Giftcon Client have
-  has_many :giftcons
+  has_many :giftcons, foreign_key: "client_id"
 
   # Review
   has_many :reviews
+
+  # Cukilog
+  has_many :cukilogs
 
   def gcm_send(message)
     api_key = "AIzaSyDBXuqBYA5vju-s1WNAjate4llPszHP-zU"

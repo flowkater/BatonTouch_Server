@@ -28,6 +28,15 @@ class Task < ActiveRecord::Base
 	# 	cashes.first.cookie
 	# end
 
+	# 현재는 하나의 카테고리만 들어간다. 카테고리로 구분
+	def category_id
+		category_ids.first
+	end
+
+	def giftcon
+		giftcons.first
+	end
+
 	# Current Task's 클라이언트
 	def clients
 		if status == 0
@@ -35,6 +44,16 @@ class Task < ActiveRecord::Base
 		else
 			select_client # Status 가 바뀌면 select 되기때문에 select_client 부름
 		end
+	end
+
+	# 리뷰가 누구를 향한 리뷰인지
+	def review_exist(to)
+		reviews.select { |r|  r.status == to}.first
+	end
+
+	# 유저가 클라이언트에게 쓴 리뷰
+	def to_clientreview
+		review = review_exist(0)
 	end
 
 	# Task's 선택된 클라이언트 호출

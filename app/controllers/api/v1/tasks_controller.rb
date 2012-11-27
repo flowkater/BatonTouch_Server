@@ -1,14 +1,14 @@
 # encoding: UTF-8
 class Api::V1::TasksController < ApplicationController
 	skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-	before_filter :authenticate_user!
+	before_filter :authenticate_user!, except: [:index, :show]
 	before_filter :restrict_access
 	respond_to :json
 
 	### @user.delay.gcm_send(message)
 
 	def index
-		@tasks = Task.page(params[:page])
+		@tasks = Task.page(params[:page])		
 		# @tasks = Task.all.reject {|t| current_user.tasks.include? t}.page(params[:page])
 		render "tasks/v1/index"
 	end
@@ -30,6 +30,7 @@ class Api::V1::TasksController < ApplicationController
 
 	# Post Action
 	def task_create
+		# task[category_ids]
 		@task = current_user.tasks.build(params[:task])
 		@price = params[:price]
 		@user_cookie = current_user.cookie - @price.to_f
@@ -76,12 +77,13 @@ class Api::V1::TasksController < ApplicationController
 	def selectclient
 		@task = Task.find(params[:id])
 		@tradestat = Tradestat.find(params[:tradestat_id])
+		@tradestat.status = true
 		@task.status = 1 # 진행
 
 		Task.transaction do
 			begin
 				@task.save!
-				@tradestat.is_selected
+				@tradestat.save!
 				@tradestat.client.gcm_send("러너로 선택되셨습니다. 바톤을 수행해주세요!")
 				render status: :ok, json: {response: 'select_success'}	
 			rescue ActiveRecord::RecordInvalid
