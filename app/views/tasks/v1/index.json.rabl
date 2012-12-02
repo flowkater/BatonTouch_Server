@@ -1,6 +1,6 @@
 collection @tasks, root: "tasks"
 
-attributes :id, :name, :description, :status, :day
+attributes :id, :name, :description, :status, :day, :resttime
 
 node(:review_toclient) do |task|
 	if task.review_exist(0)
@@ -27,4 +27,3 @@ end
 child :giftcon do |task|
 	node(:image) {|g| g.giftitem.picture}
 end
-

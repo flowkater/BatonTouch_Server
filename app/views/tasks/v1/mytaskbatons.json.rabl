@@ -1,6 +1,6 @@
 collection @tasks, root: "tasks"
 
-attributes :id, :name, :client_size, :created_at, :status, :category_id
+attributes :id, :name, :client_size, :created_at, :status, :category_id, :resttime
 
 node(:client_status){|task| current_user.client_status}
 node(:review_toclient) do |task|

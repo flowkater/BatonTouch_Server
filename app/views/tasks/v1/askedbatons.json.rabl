@@ -1,5 +1,5 @@
 collection @tasks, root: "tasks"
-attributes :id, :name, :client_size, :status, :day, :category_id
+attributes :id, :name, :client_size, :status, :day, :category_id, :resttime
 node(:client_status){|task| current_user.client_status}
 node(:review_toclient) do |task|
 	if task.review_exist(0)

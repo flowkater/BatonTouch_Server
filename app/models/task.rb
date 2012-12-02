@@ -1,5 +1,7 @@
 # encoding: UTF-8
+require 'action_view'
 class Task < ActiveRecord::Base
+	include ActionView::Helpers::DateHelper
 	# before_save :default_status
 	paginates_per 7
 	# after_create :cookiecreate
@@ -27,6 +29,19 @@ class Task < ActiveRecord::Base
 	# def cookie
 	# 	cashes.first.cookie
 	# end
+
+	def resttime
+		if (Time.now < calldate) && (Time.now < enddate)
+			if status == 0
+				t = distance_of_time_in_words(Time.now, calldate, false, locale: 'ko')
+			else
+				t = distance_of_time_in_words(Time.now, enddate, false, locale: 'ko')
+			end
+		else
+			t = "기간 만료"
+		end
+		t
+	end
 
 	# 현재는 하나의 카테고리만 들어간다. 카테고리로 구분
 	def category_id

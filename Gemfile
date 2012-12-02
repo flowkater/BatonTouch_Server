@@ -42,6 +42,9 @@ gem 'carrierwave'
 gem 'delayed_job_active_record'
 gem 'daemon'
 
+# Dotiw
+gem 'dotiw', :git => 'https://github.com/ChoJaewoo/dotiw.git'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

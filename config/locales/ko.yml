@@ -1,0 +1,21 @@
+ko:
+  seconds: 초
+  minutes: 분
+  hours: 시간
+  days: 일
+  weeks: 주
+  months: 달
+  years: 년
+  support:
+    array:
+      two_words_connector: " "
+      words_connector: " "
+      last_word_connector: " "
+  datetime:
+    distance_in_words:
+      about_x_years:
+        one: "약 1 년"
+        many: "약 %{count} 년"
+  number:
+      format:
+        separator: "."
