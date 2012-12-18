@@ -138,7 +138,7 @@ class Api::V1::TasksController < ApplicationController
 			begin
 				current_user.update_attributes!(cookie: @task.cookie)
 				@task.destroy
-				render status: :no_content, json: {response: 'delete_success'}	
+				render status: :no_content, json: {response: 'delete_success'}
 			rescue ActiveRecord::RecordInvalid
 				render status: :unprocessable_entity, json: {response: 'error'}
 				raise ActiveRecord::Rollback
@@ -146,7 +146,7 @@ class Api::V1::TasksController < ApplicationController
 		end
 	end
 
-	private 
+	private
 
 	def restrict_access
 		authenticate_or_request_with_http_token do |token, options|
